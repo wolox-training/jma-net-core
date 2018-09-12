@@ -10,9 +10,8 @@ using testing_net.Models;
 namespace testing_net.Controllers {
     public class HomeController : Controller {
         private readonly IHtmlLocalizer<HomeController> _localizer;
-        
-        public HomeController(IHtmlLocalizer<HomeController> localizer)
-        {
+
+        public HomeController (IHtmlLocalizer<HomeController> localizer) {
             this._localizer = localizer;
         }
 

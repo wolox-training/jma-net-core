@@ -41,7 +41,9 @@ namespace testing_net
 
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
-            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultLang"]);   
+            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultLang"]);
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();  
             
             }
 
