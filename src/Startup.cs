@@ -41,8 +41,16 @@ namespace testing_net
 
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
+<<<<<<< 3e454d72121da361e73dc66db8f1be83ae7080ad
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);   
         }
+=======
+            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultLang"]);
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();  
+            
+            }
+>>>>>>> Repository and UnitOfWork patterns. Repository structure. MovieRepository.
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
