@@ -42,6 +42,7 @@ namespace testing_net
 
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
+<<<<<<< 1e6d8ce4b189c5204686af36493363f0e71582c1
 <<<<<<< 3e454d72121da361e73dc66db8f1be83ae7080ad
             CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);   
         }
@@ -52,6 +53,12 @@ namespace testing_net
             
             }
 >>>>>>> Repository and UnitOfWork patterns. Repository structure. MovieRepository.
+=======
+            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+        }
+>>>>>>> Spacing and CultureInfo.CurrentUICulture.
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
