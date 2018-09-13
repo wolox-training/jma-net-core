@@ -9,4 +9,3 @@ namespace testing_net.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }
-
