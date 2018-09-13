@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Mvc;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc;
 
-namespace testing_net.Controllers
+namespace testing_net.Controllers 
 {
-    public class MoviesController : Controller
+    public class MoviesController : Controller 
     {
-        public IActionResult Index()
+        public IActionResult Index () 
         {
-            return View();
+            return View ();
         }
     }
 }
