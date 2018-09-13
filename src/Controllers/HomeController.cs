@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using testing_net.Models;
 
+
 namespace testing_net.Controllers
 {
     public class HomeController : Controller
