@@ -20,6 +20,18 @@ namespace testing_net.Controllers
 
         public IActionResult Index()
         {
+
+            var movies = _unitOfWork.MovieRepository.GetAll();
+
+            return View (movies);
+        }
+
+        public IActionResult Create()
+        {
+            // var viewModel =_unitOfWork.MovieRepository.Add(new Models.Movie())
+
+            // _unitOfWork.Complete();
+
             return View();
         }
     }
