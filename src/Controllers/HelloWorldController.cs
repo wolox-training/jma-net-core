@@ -2,8 +2,8 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace testing_net.Controllers
- {
-    public class HelloWorldController : Controller 
+{
+    public class HelloWorldController : Controller
     {
         public IActionResult Index () 
         {
