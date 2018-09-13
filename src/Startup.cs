@@ -42,11 +42,10 @@ namespace testing_net
 
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
-            CultureInfo.CurrentCulture = new CultureInfo(Configuration["DefaultLang"]);
+            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();  
-            
-            }
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
