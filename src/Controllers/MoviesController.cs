@@ -23,7 +23,6 @@ namespace testing_net.Controllers
 
         public IActionResult Index()
         {
-
             var movies = _unitOfWork.MovieRepository.GetAll();
 
             var moviesModels = new List<MovieViewModel>();
