@@ -133,5 +133,28 @@ namespace testing_net.Controllers
                 throw;
             }
         }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            MovieViewModel model = new MovieViewModel();
+            model.ID = movie.ID;
+            model.Genre = movie.Genre;
+            model.Price = movie.Price;
+            model.ReleaseDate = movie.ReleaseDate;
+            model.Title = movie.Title;
+
+            return View(model);
+        }
     }
 }
