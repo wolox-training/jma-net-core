@@ -115,6 +115,7 @@ namespace testing_net.Controllers
 
             return View(model);
         }
+<<<<<<< 59b358babf1cd0a0b0521deb6389c1bafd6e4da6
 
         public IActionResult Delete(int? id)
         {
@@ -149,5 +150,7 @@ namespace testing_net.Controllers
             _unitOfWork.Complete();
             return RedirectToAction(nameof(Index));
         }
+=======
+>>>>>>> Details end-point.
     }
 }
