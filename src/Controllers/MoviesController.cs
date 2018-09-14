@@ -191,7 +191,6 @@ namespace testing_net.Controllers
             }
 
             _unitOfWork.MovieRepository.Remove(movie);
-
             _unitOfWork.Complete();
             
             return RedirectToAction(nameof(Index));
