@@ -1,5 +1,7 @@
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
+using testing_net.Models;
+using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
 
 namespace testing_net.Controllers
@@ -23,14 +25,33 @@ namespace testing_net.Controllers
 
             var movies = _unitOfWork.MovieRepository.GetAll();
 
-            return View (movies);
+            return View(movies);
         }
 
         public IActionResult Create()
         {
-            // var viewModel =_unitOfWork.MovieRepository.Add(new Models.Movie())
 
-            // _unitOfWork.Complete();
+            var model = new MovieViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Create(MovieViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var movie = new Movie();
+                movie.ReleaseDate = model.ReleaseDate;
+                movie.Genre = model.Genre;
+                movie.Price = model.Price;
+                movie.Title = model.Title;
+
+                _unitOfWork.MovieRepository.Add(movie);
+
+                _unitOfWork.Complete();
+                return RedirectToAction("Index");
+            }
 
             return View();
         }
