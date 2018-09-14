@@ -11,4 +11,3 @@ namespace testing_net.Models
         public decimal Price { get; set; }
     }
 }
-
