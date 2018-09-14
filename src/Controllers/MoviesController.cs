@@ -35,6 +35,7 @@ namespace testing_net.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(MovieViewModel model)
         {
             if (ModelState.IsValid)
@@ -49,6 +50,64 @@ namespace testing_net.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            MovieViewModel model = new MovieViewModel();
+            model.ID = movie.ID;
+            model.Genre = movie.Genre;
+            model.Price = movie.Price;
+            model.ReleaseDate = movie.ReleaseDate;
+            model.Title = movie.Title;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, MovieViewModel model)
+        {
+            if (id != model.ID)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    var movie = _unitOfWork.MovieRepository.Get(id);
+                    movie.ID = id;
+                    movie.ReleaseDate = model.ReleaseDate;
+                    movie.Genre = model.Genre;
+                    movie.Price = model.Price;
+                    movie.Title = model.Title;
+
+                    _unitOfWork.MovieRepository.Update(movie);
+
+                    _unitOfWork.Complete();
+                    return RedirectToAction("Index");
+
+                }
+                return View(model);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }
