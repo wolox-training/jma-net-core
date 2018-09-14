@@ -58,33 +58,17 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-<<<<<<< 03b0bb8832d5e313ad63adfa0dd03ceb7d328a5a
-=======
-
->>>>>>> Edit movies.
             var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-<<<<<<< 03b0bb8832d5e313ad63adfa0dd03ceb7d328a5a
             var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
-=======
-
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
-
->>>>>>> Edit movies.
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< 03b0bb8832d5e313ad63adfa0dd03ceb7d328a5a
         public IActionResult Edit(MovieViewModel model)
         {
             try
@@ -93,38 +77,13 @@ namespace testing_net.Controllers
                 {
                     var movie = _unitOfWork.MovieRepository.Get(model.ID);
                     movie.ID = model.ID;
-=======
-        public IActionResult Edit(int id, MovieViewModel model)
-        {
-            if (id != model.ID)
-            {
-                return NotFound();
-            }
-
-            try
-            {
-
-                if (ModelState.IsValid)
-                {
-                    var movie = _unitOfWork.MovieRepository.Get(id);
-                    movie.ID = id;
->>>>>>> Edit movies.
                     movie.ReleaseDate = model.ReleaseDate;
                     movie.Genre = model.Genre;
                     movie.Price = model.Price;
                     movie.Title = model.Title;
-<<<<<<< 03b0bb8832d5e313ad63adfa0dd03ceb7d328a5a
                     _unitOfWork.MovieRepository.Update(movie);
                     _unitOfWork.Complete();
                     return RedirectToAction("Index");
-=======
-
-                    _unitOfWork.MovieRepository.Update(movie);
-
-                    _unitOfWork.Complete();
-                    return RedirectToAction("Index");
-
->>>>>>> Edit movies.
                 }
                 return View(model);
             }
@@ -163,20 +122,17 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             var movie = _unitOfWork.MovieRepository.SingleOrDefault(m => m.ID == id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
             MovieViewModel model = new MovieViewModel();
             model.ID = movie.ID;
             model.Genre = movie.Genre;
             model.Price = movie.Price;
             model.ReleaseDate = movie.ReleaseDate;
             model.Title = movie.Title;
-
             return View(model);
         }
 
@@ -189,10 +145,8 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
-            
             return RedirectToAction(nameof(Index));
         }
     }
