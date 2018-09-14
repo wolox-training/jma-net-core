@@ -156,5 +156,45 @@ namespace testing_net.Controllers
 
             return View(model);
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = _unitOfWork.MovieRepository.SingleOrDefault(m => m.ID == id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            MovieViewModel model = new MovieViewModel();
+            model.ID = movie.ID;
+            model.Genre = movie.Genre;
+            model.Price = movie.Price;
+            model.ReleaseDate = movie.ReleaseDate;
+            model.Title = movie.Title;
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var movie = _unitOfWork.MovieRepository.SingleOrDefault(m => m.ID == id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.MovieRepository.Remove(movie);
+
+            _unitOfWork.Complete();
+            
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
