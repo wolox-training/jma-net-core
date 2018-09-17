@@ -35,7 +35,6 @@ namespace testing_net.Controllers
 
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();
