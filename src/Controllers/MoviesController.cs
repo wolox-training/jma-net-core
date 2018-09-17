@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using testing_net.Models;
@@ -25,12 +26,19 @@ namespace testing_net.Controllers
 
             var movies = _unitOfWork.MovieRepository.GetAll();
 
-            return View(movies);
+            var moviesModels = new List<MovieViewModel>();
+
+            foreach (var m in movies)
+            {
+                var vm = new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate };
+                moviesModels.Add(vm);
+            }
+
+            return View(moviesModels);
         }
 
         public IActionResult Create()
         {
-
             var model = new MovieViewModel();
             return View(model);
         }
