@@ -26,10 +26,7 @@ namespace testing_net.Controllers
 
         public IActionResult Index(string movieGenre, string searchString)
         {
-<<<<<<< HEAD
             var genres = _unitOfWork.MovieRepository.GetGenres();
-=======
->>>>>>> 602dc69... Edit movies.
             var movies = _unitOfWork.MovieRepository.GetAll();
             if (!String.IsNullOrEmpty(searchString))
             {
