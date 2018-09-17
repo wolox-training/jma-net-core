@@ -24,6 +24,7 @@ namespace testing_net.Controllers
 
         public IActionResult Index()
         {
+
             var movies = _unitOfWork.MovieRepository.GetAll();
             return View(movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate }));
         }
