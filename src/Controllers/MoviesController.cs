@@ -2,9 +2,9 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using testing_net.Repositories.Interfaces;
 
-namespace testing_net.Controllers 
+namespace testing_net.Controllers
 {
-    public class MoviesController : Controller 
+    public class MoviesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -17,9 +17,10 @@ namespace testing_net.Controllers
         {
             get { return this._unitOfWork; }
         }
+
         public IActionResult Index()
         {
-            return View ();
+            return View();
         }
     }
 }
