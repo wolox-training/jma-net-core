@@ -46,7 +46,6 @@ namespace testing_net.Controllers
         [HttpPost]
         public IActionResult Create(MovieViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var movie = new Movie();
@@ -54,13 +53,10 @@ namespace testing_net.Controllers
                 movie.Genre = model.Genre;
                 movie.Price = model.Price;
                 movie.Title = model.Title;
-
                 _unitOfWork.MovieRepository.Add(movie);
-
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-
             return View();
         }
     }
