@@ -24,6 +24,7 @@ namespace testing_net.Controllers
 
         public IActionResult Index()
         {
+
             var movies = _unitOfWork.MovieRepository.GetAll();
             return View(movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate }));
         }
@@ -58,49 +59,32 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
-
+            var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, MovieViewModel model)
+        public IActionResult Edit(MovieViewModel model)
         {
-            if (id != model.ID)
-            {
-                return NotFound();
-            }
-
             try
             {
-
                 if (ModelState.IsValid)
                 {
-                    var movie = _unitOfWork.MovieRepository.Get(id);
-                    movie.ID = id;
+                    var movie = _unitOfWork.MovieRepository.Get(model.ID);
+                    movie.ID = model.ID;
                     movie.ReleaseDate = model.ReleaseDate;
                     movie.Genre = model.Genre;
                     movie.Price = model.Price;
                     movie.Title = model.Title;
-
                     _unitOfWork.MovieRepository.Update(movie);
-
                     _unitOfWork.Complete();
                     return RedirectToAction("Index");
-
                 }
                 return View(model);
             }
