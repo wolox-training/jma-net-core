@@ -17,20 +17,17 @@ namespace testing_net.Controllers
         {
             this._localizer = localizer;
         }
-
         public IActionResult Index()
         {
 
             return View();
         }
-
         public IActionResult About()
         {
             ViewData["Message"] = _localizer["DescriptionPage"];
 
             return View();
         }
-
         public IActionResult Contact()
         {
             ViewData["Message"] = _localizer["ContactPage"];
