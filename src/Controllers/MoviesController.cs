@@ -1,13 +1,26 @@
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
+using testing_net.Repositories.Interfaces;
 
-namespace testing_net.Controllers 
+namespace testing_net.Controllers
 {
-    public class MoviesController : Controller 
+    public class MoviesController : Controller
     {
-        public IActionResult Index () 
+        private readonly IUnitOfWork _unitOfWork;
+
+        public MoviesController(IUnitOfWork unitOfWork)
         {
-            return View ();
+            this._unitOfWork = unitOfWork;
+        }
+
+        public IUnitOfWork UnitOfWork
+        {
+            get { return this._unitOfWork; }
+        }
+
+        public IActionResult Index()
+        {
+            return View();
         }
     }
 }

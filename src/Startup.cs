@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using testing_net.Repositories.Database;
 using System.Globalization;
+using testing_net.Repositories.Interfaces;
 
 namespace testing_net
 {
@@ -41,7 +42,9 @@ namespace testing_net
 
             services.AddJsonLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization();
-            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);   
+            CultureInfo.CurrentUICulture = new CultureInfo(Configuration["DefaultLang"]);
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
