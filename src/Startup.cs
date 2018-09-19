@@ -14,6 +14,7 @@ using testing_net.Repositories.Database;
 using System.Globalization;
 using testing_net.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using testing_net.Models;
 
 namespace testing_net
 {
@@ -67,6 +68,8 @@ namespace testing_net
                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = false;
             });
+
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<DataBaseContext>().AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options =>
             {
