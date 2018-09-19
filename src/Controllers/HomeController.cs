@@ -19,19 +19,16 @@ namespace testing_net.Controllers
         }
         public IActionResult Index()
         {
-
             return View();
         }
         public IActionResult About()
         {
             ViewData["Message"] = _localizer["DescriptionPage"];
-
             return View();
         }
         public IActionResult Contact()
         {
             ViewData["Message"] = _localizer["ContactPage"];
-
             return View();
         }
         public IActionResult Privacy()
