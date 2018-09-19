@@ -14,7 +14,6 @@ namespace testing_net.Controllers
         {
             ViewData["Message"] = "Hello " + name;
             ViewData["NumTimes"] = numTimes;
-
             return View();
         }
     }
