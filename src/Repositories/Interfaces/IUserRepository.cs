@@ -3,8 +3,8 @@ using testing_net.Models;
 
 namespace testing_net.Repositories.Interfaces
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface IUserRepository : IRepository<ApplicationUser>
     {
-        IEnumerable<Movie> GetLastMovies(int amount);
+
     }
 }
