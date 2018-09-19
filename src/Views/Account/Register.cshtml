@@ -1,0 +1,33 @@
+@using Microsoft.AspNetCore.Identity;
+@using NetCoreBootstrap.Models.Views
+@using NetCoreBootstrap.Models.Database
+@model testing_net.Models.Views.UserViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    <h4>Register</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName)
+        @Html.EditorFor(model => model.UserName)
+        @Html.ValidationMessageFor(model => model.UserName, "")
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password)
+        @Html.EditorFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password, "")
+    </div>
+    <div class='form-group'>
+        @Html.LabelFor(model => model.RepeatPassword)
+        @Html.EditorFor(model => model.RepeatPassword)
+        @Html.ValidationMessageFor(model => model.RepeatPassword, "")
+    </div>
+    <div>
+        <input type="submit" value="Register"/>
+    </div>
+}
