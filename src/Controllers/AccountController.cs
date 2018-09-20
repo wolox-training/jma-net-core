@@ -15,7 +15,6 @@ using testing_net.Repositories;
 
 namespace testing_net.Controllers
 {
-    [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -93,7 +92,7 @@ namespace testing_net.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         #region Helpers
