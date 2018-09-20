@@ -1,8 +1,4 @@
-<<<<<<< a4c63231ff3e45c1344821bcd47286852e59a4d8
 @model testing_net.Models.Views.MovieViewModel
-=======
-@model testing_net.Models.Movie
->>>>>>> Edit movies.
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,19 +6,11 @@
 
 <h2>Edit</h2>
 
-<<<<<<< a4c63231ff3e45c1344821bcd47286852e59a4d8
 <form asp-controller="Movies" asp-action="Edit" method="post">
     <div class="form-horizontal">
         <h4>Movie</h4>
         <hr />
         <div asp-validation-summary="All" class="text-danger"></div>
-=======
-<form asp-action="Edit">
-    <div class="form-horizontal">
-        <h4>Movie</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
->>>>>>> Edit movies.
     <input type="hidden" asp-for="ID" />
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
