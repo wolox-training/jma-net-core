@@ -52,7 +52,7 @@ namespace testing_net.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    return RedirectToAction("Users", "UserManagement");
                 }
                 else
                 {
@@ -79,8 +79,8 @@ namespace testing_net.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    await _signInManager.SignInAsync(user, isPersistent: true);
+                    return RedirectToAction("Users", "UserManagement");
                 }
                 AddErrors(result);
             }
