@@ -15,6 +15,7 @@ using testing_net.Repositories;
 
 namespace testing_net.Controllers
 {
+    [Authorize]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
