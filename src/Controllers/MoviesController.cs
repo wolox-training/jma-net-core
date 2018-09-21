@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using testing_net.Models;
 using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
@@ -22,10 +24,37 @@ namespace testing_net.Controllers
             get { return this._unitOfWork; }
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string movieGenre, string searchString)
         {
+            var genres = _unitOfWork.MovieRepository.GetGenres();
+
             var movies = _unitOfWork.MovieRepository.GetAll();
-            return View(movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate }));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(s => s.Title.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(x => x.Genre == movieGenre);
+            }
+
+            var movieGenreVM = new MovieGenreViewModel();
+            movieGenreVM.movies = movies.ToList();
+            movieGenreVM.genres = new List<SelectListItem>();
+            foreach (var m in movies)
+            {
+                SelectListItem selectListItem = new SelectListItem() { Text = m.Genre, Value = m.Genre };
+                if (!movieGenreVM.genres.Any(l => l.Value == selectListItem.Value))
+                {
+                    movieGenreVM.genres.Add(selectListItem);
+                }
+            }
+
+            movieGenreVM.genres = movieGenreVM.genres.Distinct().ToList();
+
+            return View(movieGenreVM);
         }
 
         public IActionResult Create()
@@ -144,6 +173,10 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
+<<<<<<< e4019d385b752fd425d2ce3bf9300bfdeec648cc
+=======
+
+>>>>>>> Index method receives genre and title.
             return RedirectToAction(nameof(Index));
         }
     }
