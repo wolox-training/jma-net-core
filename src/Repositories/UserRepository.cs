@@ -53,3 +53,4 @@ namespace testing_net.Repositories
         public List<IdentityRole> GetAllRoles() => _roleManager.Roles.ToList();
     }
 }
+
