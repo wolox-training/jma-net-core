@@ -49,5 +49,7 @@ namespace testing_net.Repositories
                         }).Distinct().ToList();
             }
         }
+
+        public List<IdentityRole> GetAllRoles() => _roleManager.Roles.ToList();
     }
 }

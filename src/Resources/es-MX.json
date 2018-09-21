@@ -4,5 +4,7 @@
     "HomePage": "Página de inicio",
     "Hello": "Hola",
     "Register": "Registrarse",
-    "Logout": "Salir"
+    "Logout": "Salir",
+    "Users": "Usuarios",
+    "Roles": "Roles"
 }

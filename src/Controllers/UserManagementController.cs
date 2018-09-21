@@ -32,6 +32,12 @@ namespace testing_net.Controllers
             return View(new UserManagementViewModel{Users = _userRepository.GetAllUsersWithRoles()});
         }
 
+        [HttpGet]
+        public IActionResult Roles()
+        {
+            return View(new UserManagementViewModel{Roles = _userRepository.GetAllRoles() });
+        }
+
     }
 
 }

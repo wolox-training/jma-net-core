@@ -4,5 +4,7 @@
     "HomePage": "Home Page",
     "Hello": "Hey",
     "Register": "Register",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Users": "Users",
+    "Roles": "Roles"
 }
