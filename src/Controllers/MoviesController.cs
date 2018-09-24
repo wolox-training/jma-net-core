@@ -68,6 +68,7 @@ namespace testing_net.Controllers
                 movie.Genre = model.Genre;
                 movie.Price = model.Price;
                 movie.Title = model.Title;
+                movie.Rating = model.Rating;
                 _unitOfWork.MovieRepository.Add(movie);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -86,7 +87,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -104,6 +105,7 @@ namespace testing_net.Controllers
                     movie.Genre = model.Genre;
                     movie.Price = model.Price;
                     movie.Title = model.Title;
+                    movie.Rating = model.Rating;
                     _unitOfWork.MovieRepository.Update(movie);
                     _unitOfWork.Complete();
                     return RedirectToAction("Index");
@@ -127,12 +129,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -147,12 +144,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -167,10 +159,6 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
-<<<<<<< 7243cc854acfa8de701c6ba41e9fb4136d365fb5
-=======
-
->>>>>>> Index method receives genre and title.
             return RedirectToAction(nameof(Index));
         }
     }
