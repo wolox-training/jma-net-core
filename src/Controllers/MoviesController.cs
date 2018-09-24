@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using testing_net.Models;
@@ -24,16 +25,7 @@ namespace testing_net.Controllers
         public IActionResult Index()
         {
             var movies = _unitOfWork.MovieRepository.GetAll();
-
-            var moviesModels = new List<MovieViewModel>();
-
-            foreach (var m in movies)
-            {
-                var vm = new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate };
-                moviesModels.Add(vm);
-            }
-
-            return View(moviesModels);
+            return View(movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate }));
         }
 
         public IActionResult Create()
