@@ -15,6 +15,7 @@ using System.Globalization;
 using testing_net.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using testing_net.Models;
+using testing_net.Mail;
 
 namespace testing_net
 {
@@ -110,6 +111,8 @@ namespace testing_net
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Mailer.SetAccountConfiguration(Configuration);
         }
     }
 }
