@@ -87,7 +87,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -163,4 +163,3 @@ namespace testing_net.Controllers
         }
     }
 }
-
