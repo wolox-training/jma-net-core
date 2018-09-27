@@ -167,13 +167,6 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
-<<<<<<< 290f11991cbc07eae424804931fb35ac08fd6e27
-<<<<<<< e4019d385b752fd425d2ce3bf9300bfdeec648cc
-=======
-
->>>>>>> Index method receives genre and title.
-=======
->>>>>>> Spacing and small tweak on filtering of movies at Movies index.
             return RedirectToAction(nameof(Index));
         }
     }
