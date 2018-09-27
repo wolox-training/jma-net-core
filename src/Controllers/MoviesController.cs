@@ -58,13 +58,11 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
             var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
             return View(model);
         }
@@ -101,20 +99,17 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
             MovieViewModel model = new MovieViewModel();
             model.ID = movie.ID;
             model.Genre = movie.Genre;
             model.Price = movie.Price;
             model.ReleaseDate = movie.ReleaseDate;
             model.Title = movie.Title;
-
             return View(model);
         }
 
@@ -124,20 +119,17 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
-            var movie = _unitOfWork.MovieRepository.SingleOrDefault(m => m.ID == id.Value);
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
             MovieViewModel model = new MovieViewModel();
             model.ID = movie.ID;
             model.Genre = movie.Genre;
             model.Price = movie.Price;
             model.ReleaseDate = movie.ReleaseDate;
             model.Title = movie.Title;
-
             return View(model);
         }
 
@@ -150,10 +142,8 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
-            
             return RedirectToAction(nameof(Index));
         }
     }
