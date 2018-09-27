@@ -60,7 +60,6 @@ namespace testing_net.Controllers
                     return View(model);
                 }
             }
-
             return View(model);
         }
 
@@ -84,7 +83,6 @@ namespace testing_net.Controllers
                 }
                 AddErrors(result);
             }
-
             return View(model);
         }
 
