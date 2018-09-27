@@ -1,5 +1,10 @@
 {
     "DescriptionPage": "Página de descripción de su aplicación",
     "ContactPage": "Página de contacto",
-    "HomePage": "Página de inicio"
+    "HomePage": "Página de inicio",
+    "Hello": "Hola",
+    "Register": "Registrarse",
+    "Logout": "Salir",
+    "Users": "Usuarios",
+    "Roles": "Roles"
 }
