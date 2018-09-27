@@ -27,19 +27,15 @@ namespace testing_net.Controllers
         public IActionResult Index(string movieGenre, string searchString)
         {
             var genres = _unitOfWork.MovieRepository.GetGenres();
-
             var movies = _unitOfWork.MovieRepository.GetAll();
-
             if (!String.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(s => s.Title.Contains(searchString));
+                movies = movies.Where(m => m.Title.ToLower().Contains(searchString.ToLower()));
             }
-
             if (!String.IsNullOrEmpty(movieGenre))
             {
-                movies = movies.Where(x => x.Genre == movieGenre);
+                movies = movies.Where(m => m.Genre == movieGenre);
             }
-
             var movieGenreVM = new MovieGenreViewModel();
             movieGenreVM.movies = movies.ToList();
             movieGenreVM.genres = new List<SelectListItem>();
@@ -51,9 +47,7 @@ namespace testing_net.Controllers
                     movieGenreVM.genres.Add(selectListItem);
                 }
             }
-
             movieGenreVM.genres = movieGenreVM.genres.Distinct().ToList();
-
             return View(movieGenreVM);
         }
 
@@ -173,10 +167,13 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
+<<<<<<< 290f11991cbc07eae424804931fb35ac08fd6e27
 <<<<<<< e4019d385b752fd425d2ce3bf9300bfdeec648cc
 =======
 
 >>>>>>> Index method receives genre and title.
+=======
+>>>>>>> Spacing and small tweak on filtering of movies at Movies index.
             return RedirectToAction(nameof(Index));
         }
     }
