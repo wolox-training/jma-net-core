@@ -11,7 +11,7 @@ using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
 
 namespace testing_net.Controllers
-{
+{   
     public class MoviesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -170,13 +170,11 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             var movie = _unitOfWork.MovieRepository.Get(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
-
             MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
@@ -193,7 +191,6 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-
             StringBuilder builder = new StringBuilder();
             builder.Append(movie.Title.ToString()).Append(" \n");
             builder.Append(movie.Genre.ToString()).Append(" \n");

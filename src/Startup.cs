@@ -111,7 +111,6 @@ namespace testing_net
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
             Mailer.SetAccountConfiguration(Configuration);
         }
     }
