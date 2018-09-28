@@ -11,7 +11,7 @@ using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
 
 namespace testing_net.Controllers
-{   
+{
     public class MoviesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +26,7 @@ namespace testing_net.Controllers
             get { return this._unitOfWork; }
         }
 
-        public IActionResult Index(string movieGenre, string searchString)
+        public IActionResult Index(string movieGenre, string searchString, string sortOrder)
         {
             var genres = _unitOfWork.MovieRepository.GetGenres();
             var movies = _unitOfWork.MovieRepository.GetAll();
@@ -37,6 +37,24 @@ namespace testing_net.Controllers
             if (!String.IsNullOrEmpty(movieGenre))
             {
                 movies = movies.Where(m => m.Genre == movieGenre);
+            }
+            if (!String.IsNullOrEmpty(sortOrder))
+            {
+                switch (sortOrder)
+                {
+                    case "Title":
+                        movies = movies.OrderBy(m => m.Title);
+                        break;
+                    case "Release Date":
+                        movies = movies.OrderBy(m => m.ReleaseDate);
+                        break;
+                    case "Genre":
+                        movies = movies.OrderBy(m => m.Genre);
+                        break;
+                    default:
+                        movies = movies.OrderBy(m => m.Rating);
+                        break;
+                }
             }
             var movieGenreVM = new MovieGenreViewModel();
             movieGenreVM.movies = movies.ToList();
