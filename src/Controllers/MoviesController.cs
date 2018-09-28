@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using testing_net.Mail;
 using testing_net.Models;
 using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
 
 namespace testing_net.Controllers
-{
+{   
     public class MoviesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -159,6 +161,43 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult SendMovieToAddress(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SendMovieToAddress([FromForm] string EmailAddress, int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append(movie.Title.ToString()).Append(" \n");
+            builder.Append(movie.Genre.ToString()).Append(" \n");
+            builder.Append(movie.ReleaseDate.ToString()).Append(" \n");
+            builder.Append(movie.Price.ToString()).Append(" \n");
+            builder.Append(movie.Rating.ToString()).Append(" \n");
+            Mailer.Send(EmailAddress, movie.Title.ToString(), builder.ToString());
             return RedirectToAction(nameof(Index));
         }
     }
