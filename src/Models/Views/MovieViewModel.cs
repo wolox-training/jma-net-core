@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,6 +31,7 @@ namespace testing_net.Models.Views
         [StringLength(50)]
         [Required]
         public string Rating { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
     }
 }

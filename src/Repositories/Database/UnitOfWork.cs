@@ -13,6 +13,7 @@ namespace testing_net.Repositories.Database
         }
 
         public IMovieRepository MovieRepository { get; private set; }
+        public ICommentRepository CommentRepository { get; private set; }
 
         public int Complete()
         {
