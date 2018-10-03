@@ -122,7 +122,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             if (movie == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace testing_net.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var movie = _unitOfWork.MovieRepository.Get(model.ID);
+                    var movie = _unitOfWork.MovieRepository.GetMovieWithComments(model.ID);
                     movie.ID = model.ID;
                     movie.ReleaseDate = model.ReleaseDate;
                     movie.Genre = model.Genre;
@@ -165,11 +165,34 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             if (movie == null)
             {
                 return NotFound();
             }
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Details(int? id, string commentText)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            var comment = new Comment();
+            comment.MovieID = id.Value;
+            comment.Movie = movie;
+            comment.Text = commentText;
+            _unitOfWork.CommentRepository.Add(comment);
+            // movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
+            _unitOfWork.Complete();
             MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
             return View(model);
         }
@@ -180,7 +203,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             if (movie == null)
             {
                 return NotFound();
@@ -209,7 +232,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             if (movie == null)
             {
                 return NotFound();
@@ -225,7 +248,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             if (movie == null)
             {
                 return NotFound();
