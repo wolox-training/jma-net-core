@@ -42,7 +42,7 @@
     </dl>
 </div>
 <hr />
-@if (Model.Comments != null)
+@if (Model.Comments.Any())
 {
     <h4>
         @Html.DisplayNameFor(model => model.Comments)
@@ -56,13 +56,18 @@
                 </td>
             </tr>
         }
-        <td></td>
     </table>
-    <br>
 }
-<input type="hidden" asp-for="ID" />
-<form asp-controller="Movies" asp-action="Details" method="post">
-    <textarea name="commentText" class="form-control" placeholder="Your comment..." rows="5" cols="50"></textarea>
+else
+{
+    <h5>
+        No comments for now.
+    </h5>
+}
+<hr />
+<form asp-controller="Movies" asp-action="AddComment" method="post">
+    <input type="hidden" asp-for="ID" />
+    <textarea name="commentText" value="Your comment..." rows="5" cols="50"></textarea>
     <br>
     <div class="form-group">
         <div class="co-md-10">

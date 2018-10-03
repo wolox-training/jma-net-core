@@ -175,7 +175,7 @@ namespace testing_net.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(int? id, string commentText)
+        public IActionResult AddComment(int? id, string commentText)
         {
             if (id == null)
             {
@@ -191,10 +191,8 @@ namespace testing_net.Controllers
             comment.Movie = movie;
             comment.Text = commentText;
             _unitOfWork.CommentRepository.Add(comment);
-            // movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
             _unitOfWork.Complete();
-            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
-            return View(model);
+            return RedirectToAction("Details", new { id = id });
         }
 
         public IActionResult Delete(int? id)
