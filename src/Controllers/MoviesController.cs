@@ -174,27 +174,6 @@ namespace testing_net.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public IActionResult AddComment(int? id, string commentText)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var movie = _unitOfWork.MovieRepository.GetMovieWithComments(id.Value);
-            if (movie == null)
-            {
-                return NotFound();
-            }
-            var comment = new Comment();
-            comment.MovieID = id.Value;
-            comment.Movie = movie;
-            comment.Text = commentText;
-            _unitOfWork.CommentRepository.Add(comment);
-            _unitOfWork.Complete();
-            return RedirectToAction("Details", new { id = id });
-        }
-
         public IActionResult Delete(int? id)
         {
             if (id == null)
