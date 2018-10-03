@@ -74,16 +74,7 @@ namespace testing_net.Controllers
             movieGenreVM.CurrentFilter = searchString;
             movieGenreVM.CurrentSortOrder = sortOrder;
             movieGenreVM.CurrentMovieGenre = movieGenre;
-            var movieVMs = movies.Select(
-            m => new MovieViewModel
-            {
-                ID = m.ID,
-                Title = m.Title,
-                ReleaseDate = m.ReleaseDate,
-                Genre = m.Genre,
-                Price = m.Price,
-                Rating = m.Rating
-            }).ToList();
+            var movieVMs = movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, ReleaseDate = m.ReleaseDate, Genre = m.Genre, Price = m.Price, Rating = m.Rating }).ToList();
             int pageSize = 3;
             movieGenreVM.Movies = PaginatedList<MovieViewModel>.Create(movieVMs, page ?? 1, pageSize);
             movieGenreVM.Genres = new List<SelectListItem>();
