@@ -5,9 +5,10 @@ namespace testing_net.Models.Views
 {
     public class MovieGenreViewModel
     {
-        public List<Movie> movies;
-        public List<SelectListItem> genres;
-        public string movieGenre { get; set; }
-        public string sortOrder { get; set; }
+        public PaginatedList<MovieViewModel> Movies { get; set; }
+        public List<SelectListItem> Genres { get; set; }
+        public string CurrentFilter { get; set; }
+        public string CurrentMovieGenre { get; set; }
+        public string CurrentSortOrder { get; set; }
     }
 }

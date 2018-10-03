@@ -26,8 +26,19 @@ namespace testing_net.Controllers
             get { return this._unitOfWork; }
         }
 
-        public IActionResult Index(string movieGenre, string searchString, string sortOrder)
+        public IActionResult Index(string movieGenre, string searchString, string sortOrder, int? page, string currentFilter)
         {
+            ViewData["TitleSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewData["ReleaseDateSortParm"] = sortOrder == "date" ? "date_desc" : "date";
+            ViewData["GenreSortParm"] = sortOrder == "genre" ? "genre_desc" : "genre";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             var genres = _unitOfWork.MovieRepository.GetGenres();
             var movies = _unitOfWork.MovieRepository.GetAll();
             if (!String.IsNullOrEmpty(searchString))
@@ -38,36 +49,44 @@ namespace testing_net.Controllers
             {
                 movies = movies.Where(m => m.Genre == movieGenre);
             }
-            if (!String.IsNullOrEmpty(sortOrder))
+            switch (sortOrder)
             {
-                switch (sortOrder)
-                {
-                    case "Title":
-                        movies = movies.OrderBy(m => m.Title);
-                        break;
-                    case "Release Date":
-                        movies = movies.OrderBy(m => m.ReleaseDate);
-                        break;
-                    case "Genre":
-                        movies = movies.OrderBy(m => m.Genre);
-                        break;
-                    default:
-                        movies = movies.OrderBy(m => m.Rating);
-                        break;
-                }
+                case "title_desc":
+                    movies = movies.OrderByDescending(m => m.Title);
+                    break;
+                case "date":
+                    movies = movies.OrderBy(m => m.ReleaseDate);
+                    break;
+                case "date_desc":
+                    movies = movies.OrderByDescending(m => m.ReleaseDate);
+                    break;
+                case "genre":
+                    movies = movies.OrderBy(m => m.Genre);
+                    break;
+                case "genre_desc":
+                    movies = movies.OrderByDescending(m => m.Genre);
+                    break;
+                default:
+                    movies = movies.OrderBy(m => m.Title);
+                    break;
             }
             var movieGenreVM = new MovieGenreViewModel();
-            movieGenreVM.movies = movies.ToList();
-            movieGenreVM.genres = new List<SelectListItem>();
+            movieGenreVM.CurrentFilter = searchString;
+            movieGenreVM.CurrentSortOrder = sortOrder;
+            movieGenreVM.CurrentMovieGenre = movieGenre;
+            var movieVMs = movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, ReleaseDate = m.ReleaseDate, Genre = m.Genre, Price = m.Price, Rating = m.Rating }).ToList();
+            int pageSize = 3;
+            movieGenreVM.Movies = PaginatedList<MovieViewModel>.Create(movieVMs, page ?? 1, pageSize);
+            movieGenreVM.Genres = new List<SelectListItem>();
             foreach (var m in movies)
             {
                 SelectListItem selectListItem = new SelectListItem() { Text = m.Genre, Value = m.Genre };
-                if (!movieGenreVM.genres.Any(l => l.Value == selectListItem.Value))
+                if (!movieGenreVM.Genres.Any(l => l.Value == selectListItem.Value))
                 {
-                    movieGenreVM.genres.Add(selectListItem);
+                    movieGenreVM.Genres.Add(selectListItem);
                 }
             }
-            movieGenreVM.genres = movieGenreVM.genres.Distinct().ToList();
+            movieGenreVM.Genres = movieGenreVM.Genres.Distinct().ToList();
             return View(movieGenreVM);
         }
 

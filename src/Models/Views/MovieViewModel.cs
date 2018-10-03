@@ -27,7 +27,7 @@ namespace testing_net.Models.Views
         public decimal Price { get; set; }
         
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-        [StringLength(5)]
+        [StringLength(50)]
         [Required]
         public string Rating { get; set; }
 
