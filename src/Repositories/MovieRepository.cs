@@ -13,6 +13,11 @@ namespace testing_net.Repositories
         {
         }
 
+        public IEnumerable<string> GetGenres()
+        {
+            return Context.Movies.OrderBy(m => m.Genre).Select(m => m.Genre).Distinct();
+        }
+
         IEnumerable<Movie> IMovieRepository.GetLastMovies(int amount)
         {
             return Context.Movies.OrderBy(m => m.ReleaseDate).Take(amount);

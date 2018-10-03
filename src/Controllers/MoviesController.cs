@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using testing_net.Mail;
 using testing_net.Models;
 using testing_net.Models.Views;
 using testing_net.Repositories.Interfaces;
 
 namespace testing_net.Controllers
-{
+{   
     public class MoviesController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -22,10 +26,31 @@ namespace testing_net.Controllers
             get { return this._unitOfWork; }
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string movieGenre, string searchString)
         {
+            var genres = _unitOfWork.MovieRepository.GetGenres();
             var movies = _unitOfWork.MovieRepository.GetAll();
-            return View(movies.Select(m => new MovieViewModel { ID = m.ID, Title = m.Title, Genre = m.Genre, Price = m.Price, ReleaseDate = m.ReleaseDate }));
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(m => m.Title.ToLower().Contains(searchString.ToLower()));
+            }
+            if (!String.IsNullOrEmpty(movieGenre))
+            {
+                movies = movies.Where(m => m.Genre == movieGenre);
+            }
+            var movieGenreVM = new MovieGenreViewModel();
+            movieGenreVM.movies = movies.ToList();
+            movieGenreVM.genres = new List<SelectListItem>();
+            foreach (var m in movies)
+            {
+                SelectListItem selectListItem = new SelectListItem() { Text = m.Genre, Value = m.Genre };
+                if (!movieGenreVM.genres.Any(l => l.Value == selectListItem.Value))
+                {
+                    movieGenreVM.genres.Add(selectListItem);
+                }
+            }
+            movieGenreVM.genres = movieGenreVM.genres.Distinct().ToList();
+            return View(movieGenreVM);
         }
 
         public IActionResult Create()
@@ -45,6 +70,7 @@ namespace testing_net.Controllers
                 movie.Genre = model.Genre;
                 movie.Price = model.Price;
                 movie.Title = model.Title;
+                movie.Rating = model.Rating;
                 _unitOfWork.MovieRepository.Add(movie);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -63,7 +89,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            var model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -81,6 +107,7 @@ namespace testing_net.Controllers
                     movie.Genre = model.Genre;
                     movie.Price = model.Price;
                     movie.Title = model.Title;
+                    movie.Rating = model.Rating;
                     _unitOfWork.MovieRepository.Update(movie);
                     _unitOfWork.Complete();
                     return RedirectToAction("Index");
@@ -104,12 +131,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -124,12 +146,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel();
-            model.ID = movie.ID;
-            model.Genre = movie.Genre;
-            model.Price = movie.Price;
-            model.ReleaseDate = movie.ReleaseDate;
-            model.Title = movie.Title;
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
             return View(model);
         }
 
@@ -144,6 +161,43 @@ namespace testing_net.Controllers
             }
             _unitOfWork.MovieRepository.Remove(movie);
             _unitOfWork.Complete();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult SendMovieToAddress(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SendMovieToAddress([FromForm] string EmailAddress, int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var movie = _unitOfWork.MovieRepository.Get(id.Value);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append(movie.Title.ToString()).Append(" \n");
+            builder.Append(movie.Genre.ToString()).Append(" \n");
+            builder.Append(movie.ReleaseDate.ToString()).Append(" \n");
+            builder.Append(movie.Price.ToString()).Append(" \n");
+            builder.Append(movie.Rating.ToString()).Append(" \n");
+            Mailer.Send(EmailAddress, movie.Title.ToString(), builder.ToString());
             return RedirectToAction(nameof(Index));
         }
     }
