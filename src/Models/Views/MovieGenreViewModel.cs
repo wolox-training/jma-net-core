@@ -8,5 +8,6 @@ namespace testing_net.Models.Views
         public List<Movie> movies;
         public List<SelectListItem> genres;
         public string movieGenre { get; set; }
+        public string sortOrder { get; set; }
     }
 }
