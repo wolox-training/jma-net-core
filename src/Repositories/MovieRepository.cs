@@ -18,9 +18,9 @@ namespace testing_net.Repositories
             return Context.Movies.OrderBy(m => m.Genre).Select(m => m.Genre).Distinct();
         }
 
-        IEnumerable<Movie> IMovieRepository.GetLastMovies(int amount)
+        public Movie GetMovieWithComments(int id)
         {
-            return Context.Movies.OrderBy(m => m.ReleaseDate).Take(amount);
+            return Context.Movies.Where(m => m.ID == id).Include(m => m.Comments).FirstOrDefault();
         }
     }
 }

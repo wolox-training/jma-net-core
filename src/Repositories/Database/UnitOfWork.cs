@@ -10,6 +10,7 @@ namespace testing_net.Repositories.Database
         {
             _context = context;
             MovieRepository = new MovieRepository(_context);
+            CommentRepository = new CommentRepository(_context);
         }
 
         public IMovieRepository MovieRepository { get; private set; }

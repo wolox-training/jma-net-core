@@ -7,7 +7,6 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Movie</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -42,6 +41,41 @@
         </dd>
     </dl>
 </div>
+<hr />
+@if (Model.Comments.Any())
+{
+    <h4>
+        @Html.DisplayNameFor(model => model.Comments)
+    </h4>
+    <table class="table">
+        @foreach (var item in Model.Comments)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Text)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h5>
+        No comments for now.
+    </h5>
+}
+<hr />
+<form asp-controller="Movies" asp-action="AddComment" method="post">
+    <input type="hidden" asp-for="ID" />
+    <textarea name="commentText" value="Your comment..." rows="5" cols="50"></textarea>
+    <br>
+    <div class="form-group">
+        <div class="co-md-10">
+            <input type="submit" class="btn btn-default" value="Comment" />
+        </div>
+    </div>
+</form>
+<hr />
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
     <a asp-action="Index">Back to List</a>
