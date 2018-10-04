@@ -42,28 +42,28 @@
     </dl>
 </div>
 <hr />
-@if (Model.Comments.Any())
+@if (Model.Comments == null || !Model.Comments.Any())
+{
+    <h5 id="noComments">
+        No comments for now.
+    </h5>
+}
+else
 {
     <h4>
         @Html.DisplayNameFor(model => model.Comments)
     </h4>
-    <table class="table">
-        @foreach (var item in Model.Comments)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Text)
-                </td>
-            </tr>
-        }
-    </table>
 }
-else
-{
-    <h5>
-        No comments for now.
-    </h5>
-}
+<table class="table">
+    @foreach (var item in Model.Comments)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+        </tr>
+    }
+</table>
 <div class="form-group">
     <div class="co-md-10">
         <input id="movieID" type="hidden" asp-for="ID" />

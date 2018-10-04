@@ -18,6 +18,8 @@ $(function () {
             },
             complete: function (jqXHR, state) {
                 $('.table').append( `<tr><td>${text}</td></tr>`);
+                $("#noComments").hide();
+                $('#commentTextArea').val('');
             }
         });         
     });
