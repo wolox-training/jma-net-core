@@ -257,6 +257,10 @@ namespace testing_net.Controllers
             builder.Append(movie.ReleaseDate.ToString()).Append(" \n");
             builder.Append(movie.Price.ToString()).Append(" \n");
             builder.Append(movie.Rating.ToString()).Append(" \n");
+            foreach(var c in movie.Comments)
+            {
+                builder.Append(c.Text).Append(" \n");
+            }
             Mailer.Send(EmailAddress, movie.Title.ToString(), builder.ToString());
             return RedirectToAction(nameof(Index));
         }

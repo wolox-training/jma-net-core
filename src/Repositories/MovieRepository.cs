@@ -20,7 +20,7 @@ namespace testing_net.Repositories
 
         public Movie GetMovieWithComments(int id)
         {
-            return Context.Movies.Include(m => m.Comments).Where(m => m.ID == id).FirstOrDefault();
+            return Context.Movies.Where(m => m.ID == id).Include(m => m.Comments).FirstOrDefault();
         }
     }
 }
