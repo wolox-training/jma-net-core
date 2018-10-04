@@ -108,6 +108,7 @@ namespace testing_net.Controllers
                 movie.Price = model.Price;
                 movie.Title = model.Title;
                 movie.Rating = model.Rating;
+                movie.Comments = model.Comments;
                 _unitOfWork.MovieRepository.Add(movie);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -126,7 +127,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
             return View(model);
         }
 
@@ -145,6 +146,7 @@ namespace testing_net.Controllers
                     movie.Price = model.Price;
                     movie.Title = model.Title;
                     movie.Rating = model.Rating;
+                    movie.Comments = model.Comments;
                     _unitOfWork.MovieRepository.Update(movie);
                     _unitOfWork.Complete();
                     return RedirectToAction("Index");
@@ -168,7 +170,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
             return View(model);
         }
 
@@ -183,7 +185,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
             return View(model);
         }
 
@@ -212,7 +214,7 @@ namespace testing_net.Controllers
             {
                 return NotFound();
             }
-            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating };
+            MovieViewModel model = new MovieViewModel { ID = movie.ID, Genre = movie.Genre, Price = movie.Price, ReleaseDate = movie.ReleaseDate, Title = movie.Title, Rating = movie.Rating, Comments = movie.Comments };
             return View(model);
         }
 
