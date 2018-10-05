@@ -31,7 +31,6 @@ namespace testing_net.Controllers
             comment.Text = commentText;
             _unitOfWork.CommentRepository.Add(comment);
             _unitOfWork.Complete();
-
             return Json(new {Text = commentText});
         }
     }
