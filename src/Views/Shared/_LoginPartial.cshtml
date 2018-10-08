@@ -15,7 +15,7 @@
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink($"{hello} {UserManager.GetUserName(User)}!", "Edit", "Account")
+                @Html.ActionLink($"{hello} {UserManager.GetUserName(User)}!", "Users", "UserManagement")
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">@Localizer["Logout"]</button>
